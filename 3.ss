@@ -26,17 +26,12 @@
 ; greater than 100.
 (define curve-exam
   (lambda (scores)
-    (define curve-loop
-      (lambda (curve scores)
-	(if (null? scores)
-	    '()
-	    (cons (cropped-add curve (car scores))
-		  (curve-loop curve (cdr scores))))))
-    (define curve-amount
-      (lambda (biggest scores)
-	(cond [(null? scores) (* 2 (- 100 biggest))]
-	      [(> (car scores) biggest)
-	       (curve-amount (car scores) (cdr scores))]
-	      [else
-	       (curve-amount biggest (cdr scores))])))
-    (curve-loop (curve-amount 0 scores) scores)))
+    (cropped-add (curve-amount 0 scores) 100 scores)))
+
+(define curve-amount
+  (lambda (biggest scores)
+    (cond [(null? scores) (* 2 (- 100 biggest))]
+	  [(> (car scores) biggest)
+	   (curve-amount (car scores) (cdr scores))]
+	  [else
+	   (curve-amount biggest (cdr scores))])))
