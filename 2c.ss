@@ -10,11 +10,11 @@
 (define highlight-all
   (lambda (item ls)
     (cond [(null? ls) '()]
-	  [(equal? item (car ls))
-	   (cons (list item)
-		 (highlight item (cdr ls)))]
 	  [(list? (car ls))
 	   (cons (highlight-all item (car ls))
+		 (highlight-all item (cdr ls)))]
+	  [(equal? item (car ls))
+	   (cons (list item)
 		 (highlight-all item (cdr ls)))]
 	  [else
 	   (cons (car ls)
